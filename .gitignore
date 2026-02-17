@@ -7,5 +7,9 @@
 *.snm
 *.synctex.gz
 *.toc
+*.bbl
+*.bcf
+*.blg
+*.run.xml
 
 .vscode/

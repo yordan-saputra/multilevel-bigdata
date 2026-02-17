@@ -1,7 +1,11 @@
-\documentclass{beamer}
+\documentclass[notes]{beamer}       % print frame + notes
+% \documentclass[notes=only]{beamer}   % only notes
+% \documentclass{beamer}              % only frames
 \setbeamertemplate{caption}[numbered]
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
+\usepackage[style=authoryear, backend=biber]{biblatex}
+\addbibresource{references.bib}
 
 \usetheme{Madrid}
 \usecolortheme{default}
@@ -39,252 +43,47 @@
 % END OF CONFIGURATION---------------------------------------
 
 % OTHER CONFIGURATION --------------------------------------
+\setbeamertemplate{caption}[numbered]
 \setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\textbullet}
+\setbeamertemplate{enumerate items}[circle]
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}{\hspace{1.2em}\textbullet~\inserttocsubsection\par}
 % END OF CONFIGURATION---------------------------------------
 
 \begin{document}
 
     \frame{\titlepage}
 
-    \begin{frame}
-        \frametitle{IMPORTANT NOTES}
-        \begin{itemize}
-            \item DONT FORGET TO CITE PROPERLY. rn im just adding links as references but we should have a proper bibliography slide at the end.
-            \item \textcolor{red}{Notes for Omer: the blog \href{https://m-clark.github.io/posts/2019-10-20-big-mixed-models/}{Clark, Michael. (2019).} goes to talk about speed comparison between lme4 and mgcv (mainly for GAM, but can also be used for linear model). But, I dont think we should explore the GAM part since it is another topic? I want to stay on linear model. what do u think?}
-            \item Add more notes here
-        \end{itemize}
-    \end{frame}
+    % \begin{frame}
+    %     \frametitle{IMPORTANT NOTES}
+    %     \begin{itemize}
+    %         \item DONT FORGET TO CITE PROPERLY. rn im just adding links as references but we should have a proper bibliography slide at the end.
+    %         \item \textcolor{red}{Notes for Omer: the blog \href{https://m-clark.github.io/posts/2019-10-20-big-mixed-models/}{Clark, Michael. (2019).} goes to talk about speed comparison between lme4 and mgcv (mainly for GAM, but can also be used for linear model). But, I dont think we should explore the GAM part since it is another topic? I want to stay on linear model. what do u think?}
+    %         \item Add more notes here
+    %     \end{itemize}
+    % \end{frame}
 
-    \begin{frame}
-        \frametitle{QUESTIONS FOR FEEDBACK}
-        \begin{itemize}
-            \item do we need to fit our own model using either real or syntethic data? or just explanation is enough?
-            \item should we go in deeper on the dependent / overlapping subsamples?
-            \item is the R packages part needed?
-            \item also, im not sure whether the R packages here is using split sample approach or not. from what i've read, it doesnt seem like it, but this is the only source we have
-            \item Add more questions here
-        \end{itemize}
-    \end{frame}
+    % \begin{frame}
+    %     \frametitle{QUESTIONS FOR FEEDBACK}
+    %     \begin{itemize}
+    %         \item do we need to fit our own model using either real or syntethic data? or just explanation is enough?
+    %         \item should we go in deeper on the dependent / overlapping subsamples?
+    %         \item is the R packages part needed?
+    %         \item also, im not sure whether the R packages here is using split sample approach or not. from what i've read, it doesnt seem like it, but this is the only source we have
+    %         \item Add more questions here
+    %     \end{itemize}
+    % \end{frame}
 
     \input{01_introduction.tex}
     \input{02_split_sample_approach.tex}
     \input{03_r_packages.tex}
     \input{04_summary.tex}
 
-    % \section{GPT OUTLINE SUGGESTION}
-
-    %     \begin{frame} \scriptsize
-    %         \frametitle{OUTLINE FROM GPT - ADJUST ACCORDINGLY}
-
-    %         \begin{columns}
-    %             \column{0.5\textwidth}
-    %                 2. Introduction (2 min)
-    %                 \begin{itemize}
-    %                     \item What multilevel (hierarchical) models are
-    %                     \item Why they matter in modern statistical modeling
-    %                     \item The challenge: traditional multilevel modeling vs massive datasets
-    %                     \item Motivating examples (e.g., education, healthcare, online platforms)
-    %                 \end{itemize}
-
-    %                 3. Challenges of Multilevel Modeling with Big Data (3 min)
-    %                 \begin{itemize}
-    %                     \item Memory and computational constraints
-    %                     \item Slow estimation with complex models
-    %                     \item High-dimensional random effects
-    %                     \item Crossed vs nested structures
-    %                     \item Sparsity and unbalanced group sizes
-    %                     \item Need for distributed or approximate solutions
-    %                 \end{itemize}
-
-    %             \column{0.5\textwidth}
-    %                 4. Core Approaches to Scaling Multilevel Models (Main Section) (10 min)
-
-    %                 4.1 Approximate Inference Methods
-    %                 \begin{itemize}
-    %                     \item Variational inference
-    %                     \item Laplace approximation
-    %                     \item Integrated Nested Laplace Approximation (INLA)
-    %                     \item Strengths and trade-offs
-    %                 \end{itemize}
-
-    %                 4.2 Penalized and Regularized Models
-    %                 \begin{itemize}
-    %                     \item L1/L2 penalties on random effects
-    %                     \item Elastic net for hierarchical data
-    %                     \item Shrinkage approaches for high-dimensional random effects
-    %                 \end{itemize}
-
-    %                 4.3 Subsampling and Data Reduction
-    %                 \begin{itemize}
-    %                     \item Coresets
-    %                     \item Sketching methods
-    %                     \item Strategic subsampling (e.g., cluster-aware subsampling)
-    %                     \item When they work vs when they fail
-    %                 \end{itemize}
-    %         \end{columns}
-    %     \end{frame}
-
-    %     \begin{frame} \scriptsize
-    %         \frametitle{OUTLINE FROM GPT}
-
-    %         \begin{columns}
-    %             \column{0.5\textwidth}
-    %                 4.4 Distributed and Parallel Computing Approaches
-    %                 \begin{itemize}
-    %                     \item MapReduce-style estimation
-    %                     \item Divide-and-recombine (D\&R)
-    %                     \item Distributed MCMC and expectation-maximization (EM)
-    %                     \item GPU and cloud-based ML
-    %                 \end{itemize}
-
-    %                 4.5 Specialized Algorithms for Large Hierarchical Data
-    %                 \begin{itemize}
-    %                     \item Stochastic gradient descent for multilevel models
-    %                     \item Approximate MCMC (e.g., stochastic gradient Langevin dynamics)
-    %                     \item Cluster-based aggregations
-    %                     \item Sparse matrix optimizations
-    %                 \end{itemize}
-
-    %             \column{0.5\textwidth}
-    %                 5. Case Studies (2:30 min)
-
-    %                 TBA we can use synthetic data for this i think, check this link \url{https://m-clark.github.io/posts/2019-10-20-big-mixed-models/\#r-packages-for-mixed-models-with-large-data}
-    %                 \begin{itemize}
-    %                     \item Example 1: Education dataset with millions of students/classrooms
-    %                     \item Example 2: Healthcare records (patients nested in hospitals)
-    %                     \item Example 3: Online platform data (users nested in geographic regions)
-    %                     \item Show results of using an approximate or distributed method
-    %                 \end{itemize}
-
-    %         \end{columns}
-    %     \end{frame}
-
-    %     \begin{frame} \scriptsize
-    %         \frametitle{OUTLINE FROM GPT}
-
-    %         \begin{columns}
-    %             \column{0.5\textwidth}
-    %                 6. Practical Recommendations (1 min)
-    %                 \begin{itemize}
-    %                     \item When to choose approximate inference
-    %                     \item When distributed computation is necessary
-    %                     \item Modeling trade-offs: speed vs accuracy vs complexity
-    %                     \item Tips for practitioners
-    %                 \end{itemize}
-
-    %             \column{0.5\textwidth}
-    %                 7. Conclusion (1 min)
-    %                 \begin{itemize}
-    %                     \item Multilevel models are powerful but computationally demanding
-    %                     \item Scalable solutions make them feasible for modern big data
-    %                     \item Importance of balancing interpretability and computational efficiency
-    %                 \end{itemize}
-
-    %         \end{columns}
-    %     \end{frame}
-
-        % \begin{frame}
-        %     \frametitle{Section 1}
-        %     This is a text in second frame. For the sake of showing an example.
-
-        %     \begin{itemize}
-        %         \item<1-> Text visible on slide 1
-        %         \item<2-> Text visible on slide 2
-        %         \item<3> Text visible on slides 3
-        %         \item<4-> Text visible on slide 4
-        %     \end{itemize}
-        % \end{frame}
-
-        % \begin{frame}
-        %     \frametitle{Basic Introduction}  % Title changes too!
-        %     % \frametitle<2-3>{Detailed Analysis}
-        %     % \frametitle<4>{Conclusions}
-
-        %     % Text with overlays
-        %     This text is always visible.
-        %     \only<2->{This text appears from slide 2 onwards.}
-
-        %     % Blocks with overlays
-        %     \begin{block}<1>{First Concept}
-        %     This block appears only on slide 1.
-        %     \end{block}
-
-        %     \begin{block}<2-3>{Analysis Block}
-        %     This block appears on slides 2 and 3.
-        %     \end{block}
-
-        %     \begin{block}<4>{Final Thoughts}
-        %     This block appears only on slide 4.
-        %     \end{block}
-
-        %     % Itemize with overlays
-        %     \begin{itemize}
-        %         \item<1-> Always visible item
-        %         \item<2-> Appears on slide 2
-        %         \item<3-> Appears on slide 3
-        %     \end{itemize}
-        % \end{frame}
-
-        %---------------------------------------------------------
-
-
-        %---------------------------------------------------------
-        % \begin{frame}
-        % In this slide \pause[]
-        % the text will be partially visible \pause[]
-
-        % And finally everything will be there
-        % \end{frame}
-        %---------------------------------------------------------
-
-    % \section{Second section}
-
-%---------------------------------------------------------
-% \begin{frame}
-% \frametitle{Sample frame title}
-
-% In this slide, some important text will be
-% \alert{highlighted} because it's important.
-% Please, don't abuse it.
-
-% \begin{block}{Remark}
-% Sample text
-% \end{block}
-
-% \begin{alertblock}{Important theorem}
-% Sample text in red box
-% \end{alertblock}
-
-% \begin{examples}
-% Sample text in green box. The title of the block is ``Examples``.
-% \end{examples}
-% \end{frame}
-%---------------------------------------------------------
-
-
-%---------------------------------------------------------
-%Two columns
-% \begin{frame}
-% \frametitle{Two-column slide}
-
-% \begin{columns}
-
-% \column{0.5\textwidth}
-% This is a text in first column.
-% \[E=mc^2\]
-
-% \begin{itemize}
-% \item First item
-% \item Second item
-% \end{itemize}
-
-% \column{0.5\textwidth}
-% This text will be in the second column
-% and on a second tought this is a nice looking
-% layout in some cases.
-% \end{columns}
-% \end{frame}
-%---------------------------------------------------------
-
+    \section{References}
+    \begin{frame}[allowframebreaks]{References}
+        \renewcommand*{\bibfont}{\footnotesize}
+        \printbibliography[heading=none]
+    \end{frame}
 
 \end{document}

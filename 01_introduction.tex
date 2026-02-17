@@ -1,61 +1,81 @@
 \section{Introduction}
 
-    \subsection{What are multilevel models?}
+    \subsection{What \& Why}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
-        \begin{itemize}
-            \item Hierarchical data are common in observational data, with individuals nested within geographical areas or institutions such as schools or workplaces.
-            \item Multilevel models recognise the existence of such data hierarchies by allowing for residual components at each level in the hierarchy.
-            \item This model would partition the residual variance at different levels of the hierarchy, such as between-group and within-group components, capturing unobserved characteristics that affect outcomes.
-            \item Reference: \url{https://www.bristol.ac.uk/cmm/learning/multilevel-models/what-why.html}
-        \end{itemize}
-    \end{frame}
-
-    \subsection{Statistical model}
-    \begin{frame}
-        \frametitle{\insertsection\ $-$ \insertsubsection}
-        Linear multilevel model with 1 predictor for individual $i$ in group $j$:
-        \begin{equation}
-            Y_{ij} = \underbrace{(\beta_0 + u_{0j})}_{\beta_{0j}} + \underbrace{(\beta_1 + u_{1j})}_{\beta_{1j}} X_{1,ij} + \epsilon_{ij}
-        \end{equation}
-        \begin{itemize}
-            \item $Y_{ij}$: Dependent variable for individual $i$ in group $j$
-            \item $X_{1,ij}$: Predictor variable 1 for individual $i$ in group $j$
-            \item $\beta_{0j}$: Intercept for group $j$, which consists of:
+        \begin{columns}[c] 
+            \begin{column}{0.48\textwidth}
+                \textbf{What are multilevel models?}
                 \begin{itemize}
-                    \item $\beta_0$: Overall intercept across all groups
-                    \item $u_{0j} \sim \mathcal{N}(0, \sigma_{u_0}^2)$: Random effect of intercept for group $j$
+                    \item Hierarchical Structure
+                    \item Residual Components
+                    \item Variance Partitioning
                 \end{itemize}
-            \item $\beta_{1j}$: Slope for predictor $X_{1,ij}$ for group $j$, which consists of:
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \textbf{Why use multilevel models?}
                 \begin{itemize}
-                    \item $\beta_1$: Overall slope for predictor $X_{1,ij}$ across all groups
-                    \item $u_{1j} \sim \mathcal{N}(0, \sigma_{u_1}^2)$: Random effect of slope for predictor $X_{1,ij}$ for group $j$
+                    \item Correct Inferences
+                    \item Group Effects Estimation
+                    \item Simultaneous Estimation
+                    \item Generalization Beyond Sample \footnotemark
                 \end{itemize}
-            \item $\epsilon_{ij} \sim \mathcal{N}(0, \sigma_\epsilon^2)$: Residual error for individual $i$ in group $j$
+            \end{column}
+        \end{columns} 
+        \footcitetext{bristolCMM}
+
+        \vspace{0.4cm}
+
+        \textbf{Statistical Model}
+        \[
+            \begin{aligned}
+                y_n &\sim \mathcal{N}\left(\mu_n, \sigma\right) \\
+                \mu_n &= b_0 + \sum_{p=1}^P b_p x_{pn} + \tilde{b}_{0j[n]} + \sum_{p=1}^P \tilde{b}_{pj} x_{pn}
+            \end{aligned}
+        \]
+    \end{frame}
+
+    \note{
+        \tiny
+        \textbf{What are multilevel models?}
+        \begin{itemize}
+            \item Hierarchical Structure: Observational data often feature individuals nested within higher-level groups, such as schools, workplaces, or geographical areas.
+            \item Residual Components: Multilevel models account for these hierarchies by incorporating residual components at every level of the data structure.
+            \item Variance Partitioning: These models divide residual variance into between-group and within-group components to capture unobserved factors influencing outcomes.
         \end{itemize}
-        \textcolor{red}{Notes for presentation: its possible to add predictor $X_{2,ij}$ or $Z_1j$ and so on (comment later)}
-    \end{frame}
+        \textbf{Why use multilevel models?}
+        \begin{itemize}
+            \item Correct Inferences: Traditional methods assume independent observations, which are often false. Additionally, ignoring hierarchical structures can lead to underestimated standard errors and overstated statistical significance.
+            \item Group Effects Estimation: Directly quantify between-group variation and identify outlying groups.
+            \item Simultaneous Estimation: Unlike fixed effects models, the separation of observed and unobserved group characteristics is possible, allowing for simultaneous estimation of group-level and individual-level effects.
+            \item Generalization Beyond Sample: Unlike fixed effects models which only describe sampled groups, multilevel models treat groups as random samples from a population, enabling generalizations to unobserved groups.
+        \end{itemize}
+    }
+    \note{
+        \tiny
+        \textbf{Statistical Model}
+        \[
+            \begin{aligned}
+                y_n &\sim \mathcal{N}\left(\mu_n, \sigma\right) \\
+                \mu_n &= b_0 + b_1 x_{1n} + \ldots + b_p x_{pn} + \tilde{b}_{0j[n]} + \tilde{b}_{1j[n]} x_{1n} + \ldots + \tilde{b}_{pj[n]} x_{pn}
+            \end{aligned}
+        \]
+        where:
+        \begin{itemize}
+            \item $y_n$: dependent variable for observation $n$
+            \item $x_{pn}$: predictor variable $p$ for observation $n$
+            \item $b_p$: overall slope (or intercept for $p=0$) for predictor $p$ across all groups
+            \item $\tilde{b}_{pj[n]}$: random effect of predictor $p$ for group $j$ that observation $n$ belongs to
+            \item $\sigma$: residual standard deviation (assumed constant across observations)
+        \end{itemize}
+    }
 
-    \subsection{Why use multilevel models?}
-    \begin{frame}
-        \frametitle{\insertsection\ $-$ \insertsubsection}
-        \begin{enumerate}
-            \item[1.] \textbf{Correct Inferences}: Traditional methods assume independent observations, which are often false. Additionally, ignoring hierarchical structures can lead to underestimated standard errors and overstated statistical significance.
-            \item[2.] \textbf{Group Effects Estimation}: Directly quantify between-group variation and identify outlying groups.
-            \item[3.] \textbf{Simultaneous Estimation}: Unlike fixed effects models, the separation of observed and unobserved group characteristics is possible, allowing for simultaneous estimation of group-level and individual-level effects.
-            \item[4.] \textbf{Generalization Beyond Sample}: Unlike fixed effects models which only describe sampled groups, multilevel models treat groups as random samples from a population, enabling generalizations to unobserved groups.
-            \item[5.] Reference: \url{https://www.bristol.ac.uk/cmm/learning/multilevel-models/what-why.html}
-        \end{enumerate}
-    \end{frame}
-
-    \subsection{Issues with large multilevel datasets}
+    \subsection{Issues with large datasets}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{itemize}
             \item Hierarchical data expands dramatically, potentially reaching gigabytes in size ($N$ groups $\times$ $n$ individuals $=$ massive datasets).
             \item \textbf{Large number of groups}: Computational bottleneck from numerical integration over random effects for each group at every optimization step, leading to high computational costs.
-            \item \textbf{Large group sizes}: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models.
-            % \item \textbf{Large groups and sizes} (large $N$, large $n$): Combines both of the above issues, resulting in extremely high computational demands and numerical challenges.
-            \item Reference: \href{https://m-clark.github.io/posts/2019-10-20-big-mixed-models/}{Clark, Michael. (2019).}, Speelman, Dirk. (2018) chapter 2.
+            \item \textbf{Large group sizes}: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models.\footcites{clark2019}{speelman2018}
         \end{itemize}
     \end{frame}
