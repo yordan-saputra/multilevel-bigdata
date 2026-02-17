@@ -1,0 +1,73 @@
+\section{The split-sample approach}
+
+    \subsection{Pseudo Likelihood}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item Replace a numerically challenging joint density by a simpler function assembled from suitable factors.
+            \item Consider the following log-likelihood function $\ell(\boldsymbol{\theta}) = \sum_i \ell(\boldsymbol{y_i}|\boldsymbol{\theta})$
+            \item Replaces the log-likelihood contribution $\ell(\boldsymbol{y_i}|\boldsymbol{\theta})$ by a weighted sum of log-likelihood contributions for sub-vectors $\boldsymbol{Y_i^{(s)}}$
+            \item More specifically, the pseudo-log-likelihood function:
+            \begin{equation}
+                p\ell(\boldsymbol{\psi}) = \sum_i \sum_s \delta_s\ \ell(\boldsymbol{y_i^{(s)}}|\boldsymbol{\psi})
+            \end{equation}
+            is maximized instead with respect to $\boldsymbol{\psi}$ (not necessarily identical to $\boldsymbol{\theta}$)
+            \item Although $\hat{\boldsymbol{\psi}}$ is not the MLE estimate, it still has similar properties such as consistency and asymptotic normality.
+            \item Reference: Speelman, Dirk. (2018) chapter 2.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Graphical representation}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.6\textwidth]{split_image.png}
+            \caption{Graphical representation of different ways to split large samples}
+            \label{fig:1}
+        \end{figure}
+    \end{frame}
+
+    \subsection{Independent subsamples}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item The partition are shown in panel (b) of Figure~\ref{fig:1}.
+            \item When the number of $N$ groups is large, partition the groups in $M$ independent sets $S_m$ of groups, where $m = 1, \ldots, M$.
+            \item In each subsample, the model is fitted, yielding an estimate $\hat{\boldsymbol{\theta}}_m$ of $\boldsymbol{\theta}$, equivalent to maximizing
+            \begin{equation}
+                p\ell(\boldsymbol{\psi}) = \sum_m \sum_{i \in S_m} \ell(\boldsymbol{Y_i}|\boldsymbol{\theta}_m)
+            \end{equation}
+            \item All $\boldsymbol{\theta}_m$ are equal to $\boldsymbol{\theta}$, therefore the estimates $\hat{\boldsymbol{\theta}}_m$ can be averaged to obtain an overall estimate $\hat{\boldsymbol{\theta}}$.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Dependent subsamples}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item The partition are shown in panel (c) of Figure~\ref{fig:1}.
+            \item In case of large $n$, the data is partitioned in $M$ (not independent) sets $S_m$ of groups, where $m = 1, \ldots, M$.
+            \item Fitting the model on each subsample, equivalent to maximizing
+            \begin{equation}
+                p\ell(\boldsymbol{\psi}) = \sum_m \sum_{i} \ell(\boldsymbol{Y_i^{(m)}}|\boldsymbol{\theta}_m)
+            \end{equation}
+            where $\boldsymbol{Y_i^{(m)}}$ is the observations in $\boldsymbol{Y_i}$ belonging to subsample $S_m$.
+            \item All $\boldsymbol{\theta}_m$ are not necessarily equal to $\boldsymbol{\theta}$, therefore the combination of all $\hat{\boldsymbol{\theta}}_m$ into a single estimator $\hat{\boldsymbol{\theta}}$ depends on the precise model and data structure.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Overlapping subsamples}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item The partition are shown in panel (d) of Figure~\ref{fig:1}.
+            \item Suitable for longitudinal data with very large $n$.
+            \item Similar to dependent subsamples, but association between longitudinal observations is accounted for by letting the subsamples overlap.
+            \item Denoting the parameters in pair $\{\boldsymbol{Y_i^{(p)}}, \boldsymbol{Y_i^{(q)}}\}$ by $\boldsymbol{\theta_{p,q}}$, fitting the models on all pairs is equivalent to maximizing
+            \begin{equation}
+                p\ell(\boldsymbol{\psi}) = \sum_{p < q} \sum_{i} \ell(\boldsymbol{Y_i^{(p)}}, \boldsymbol{Y_i^{(q)}}|\boldsymbol{\theta_{p,q}})
+            \end{equation}
+            \item Similarly, the combination of all $\hat{\boldsymbol{\theta}}_{p,q}$ into a single estimator $\hat{\boldsymbol{\theta}}$ depends on the precise model and data structure.
+        \end{itemize}
+    \end{frame}

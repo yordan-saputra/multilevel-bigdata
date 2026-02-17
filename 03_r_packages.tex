@@ -1,0 +1,56 @@
+\section{R Packages}
+
+    \subsection{\texttt{lme4}}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item \texttt{lme4} is an R package for fitting linear and generalized linear mixed-effects (multilevel) models using `Eigen' C\texttt{++} library and S4 classes.
+            \item It's computationally efficient, enabling it to handle very large sample sizes for simpler mixed models and to process hundreds of thousands of observations with random effects on a typical laptop.
+            \item Modeling functions:
+                \begin{itemize}
+                    \item \texttt{lmer()}: fits linear multilevel model using restricted maximum likelihood (REML) or maximum likelihood estimation.
+                    \item \texttt{glmer()}: fits generalized linear multilevel model, accommodating non-normal response distributions.
+                \end{itemize}
+            \item Reference: \url{https://cran.r-project.org/web/packages/lme4/lme4.pdf}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{\texttt{mgcv}}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item \texttt{mgcv} is an R package for fitting generalized additive models (GAMs) and generalized additive mixed models (GAMMs) using penalized regression splines.
+            \item Modeling functions:
+                \begin{itemize}
+                    \item \texttt{gam()}: fits generalized additive multilevel models using penalized regression splines with smooth terms that can incorporate multilevel structure through random effect splines.
+                    \item \texttt{bam()}: a computationally efficient version of \texttt{gam()} optimized for very large datasets.
+                    % fits generalized additive multilevel models to very large datasets, optimized through parallelization and discretization methods.
+                \end{itemize}
+            \item Reference: \url{https://cran.r-project.org/web/packages/mgcv/mgcv.pdf}
+        \end{itemize}
+    \end{frame}
+
+    \subsection{Why use \texttt{bam()}?}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+            \item The underlying model between \texttt{gam()} function and \texttt{lme4} is the same, with differences only in the way parameters are estimated.
+            \item \texttt{bam()} employs parallelized computation on model matrix subsets and optional data discretization to extract minimal necessary information, enabling efficient estimation of large multilevel models.
+            \item With large enough datasets, this discretization has negligible impact on parameter estimates (differing only at high decimal precision), but leads to dramatic speed improvements.
+        \end{itemize}
+    \end{frame}
+
+    \subsection{When to use \texttt{bam()}?}
+    \begin{frame}
+        \frametitle{\insertsection\ $-$ \insertsubsection}
+        \begin{itemize}
+        \item In general, \texttt{lme4} is preferred for most multilevel datasets due to its straightforward syntax and robust estimation methods.
+        \item \texttt{bam()} is particularly useful when:
+        \begin{itemize}
+            \item The model structure is complex and computationally demanding for \texttt{lme4}
+            \item Smooth (nonlinear) terms are required
+            \item The dataset is very large and memory limitations arise
+            \item Parallel computing resources can be effectively utilized
+        \end{itemize}
+    \end{itemize}
+    \end{frame}
