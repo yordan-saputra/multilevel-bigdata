@@ -1,6 +1,6 @@
 \section{Introduction}
 
-    \subsection{What \& Why}
+    \subsection{Multilevel Models}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{columns}[c] 
@@ -30,7 +30,7 @@
         \[
             \begin{aligned}
                 y_n &\sim \mathcal{N}\left(\mu_n, \sigma\right) \\
-                \mu_n &= b_0 + \sum_{p=1}^P b_p x_{pn} + \tilde{b}_{0j[n]} + \sum_{p=1}^P \tilde{b}_{pj} x_{pn}
+                \mu_n &= b_0 + \sum_{p=1}^P b_p x_{pn} + \tilde{b}_{0j[n]} + \sum_{p=1}^P \tilde{b}_{pj[n]} x_{pn}
             \end{aligned}
         \]
     \end{frame}
@@ -52,7 +52,7 @@
         \end{itemize}
     }
     \note{
-        \tiny
+        \small
         \textbf{Statistical Model}
         \[
             \begin{aligned}
@@ -70,12 +70,19 @@
         \end{itemize}
     }
 
-    \subsection{Issues with large datasets}
+    \subsection{Issues with Large Datasets}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
+        Hierarchical data ($N$ groups $\times$ $n$ individuals) expands dramatically, potentially reaching gigabytes in size. Two main issues with large datasets:
         \begin{itemize}
-            \item Hierarchical data expands dramatically, potentially reaching gigabytes in size ($N$ groups $\times$ $n$ individuals $=$ massive datasets).
-            \item \textbf{Large number of groups}: Computational bottleneck from numerical integration over random effects for each group at every optimization step, leading to high computational costs.
-            \item \textbf{Large group sizes}: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models.\footcites{clark2019}{speelman2018}
+            \item \textbf{Large number of groups}: Computational bottleneck from numerical integration over random effects for each group at every optimization step, leading to high computational costs
+            \item \textbf{Large group sizes}: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models \footcites{clark2019}{speelman2018}
         \end{itemize}
     \end{frame}
+
+    \note{
+        Issues with Large Datasets
+        \begin{itemize}
+            \item it's even worse when we add another level to the hierarchy, e.g. students nested within classes nested within schools, which is common in educational research.
+        \end{itemize}
+    }
