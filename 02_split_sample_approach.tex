@@ -59,28 +59,41 @@
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{itemize}
             \item Shown in panel (c) of Figure~\ref{fig:1}, dataset with large $n$ is partitioned into $M$ (not independent) sets $S_m$ of groups, where $m = 1, \ldots, M$
-            \item The partition are shown in panel (c) of Figure~\ref{fig:1}.
-            \item In case of large $n$, the data is partitioned in $M$ (not independent) sets $S_m$ of groups, where $m = 1, \ldots, M$.
             \item Fitting the model on each subsample, equivalent to maximizing
             \[
-                p\ell(\boldsymbol{\psi}) = \sum_m \sum_{i} \ell(\boldsymbol{Y_i^{(m)}}|\boldsymbol{\theta}_m)
+                p\ell(\boldsymbol{\psi}) = \sum_m \sum_{i} \ell(\boldsymbol{Y_i}^{(m)}|\boldsymbol{\theta}_m)
             \]
-            where $\boldsymbol{Y_i^{(m)}}$ is the observations in $\boldsymbol{Y_i}$ belonging to subsample $S_m$.
+            with respect to $\boldsymbol{\psi} = \{\boldsymbol{\theta}_1, \ldots, \boldsymbol{\theta}_M\}$, where $\boldsymbol{Y_i}^{(m)}$ is the observations in $\boldsymbol{Y_i}$ belonging to subsample $S_m$.
             \item All $\boldsymbol{\theta}_m$ are not necessarily equal to $\boldsymbol{\theta}$, therefore the combination of all $\hat{\boldsymbol{\theta}}_m$ into a single estimator $\hat{\boldsymbol{\theta}}$ depends on the precise model and data structure.
         \end{itemize}
     \end{frame}
+
+    \note{
+        \begin{itemize}
+            \item $\boldsymbol{\theta}_m$ are not necessarily equal to $\boldsymbol{\theta}$ because the subsamples are not independent, and there may be some correlation between the observations in different subsamples.
+            \item (GPT warning, dont trust 100\%) The combination of all $\hat{\boldsymbol{\theta}}_m$ into a single estimator $\hat{\boldsymbol{\theta}}$ can be done using various methods, such as meta-analysis techniques, or by fitting a model to the estimates $\hat{\boldsymbol{\theta}}_m$ themselves.
+        \end{itemize}
+    }
 
     \subsection{Overlapping subsamples}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{itemize}
-            \item The partition are shown in panel (d) of Figure~\ref{fig:1}.
-            \item Suitable for longitudinal data with very large $n$.
-            \item Similar to dependent subsamples, but association between longitudinal observations is accounted for by letting the subsamples overlap.
-            \item Denoting the parameters in pair $\{\boldsymbol{Y_i^{(p)}}, \boldsymbol{Y_i^{(q)}}\}$ by $\boldsymbol{\theta_{p,q}}$, fitting the models on all pairs is equivalent to maximizing
+            \item Shown in panel (d) of Figure~\ref{fig:1}, longitudinal dataset with very large $n$ is partitioned similarly to dependent subsamples, but association between longitudinal observations is accounted for by letting the subsamples overlap
+            \item Denoting the parameters in pair $\{\boldsymbol{Y_i}^{(p)}, \boldsymbol{Y_i}^{(q)}\}$ by $\boldsymbol{\theta}_{p,q}$, fitting the models on all pairs is equivalent to maximizing
             \[
-                p\ell(\boldsymbol{\psi}) = \sum_{p < q} \sum_{i} \ell(\boldsymbol{Y_i^{(p)}}, \boldsymbol{Y_i^{(q)}}|\boldsymbol{\theta_{p,q}})
+                p\ell(\boldsymbol{\psi}) = \sum_{p < q} \sum_{i} \ell(\boldsymbol{Y_i}^{(p)}, \boldsymbol{Y_i}^{(q)}|\boldsymbol{\theta}_{p,q})
             \]
+            with respect to $\boldsymbol{\psi} = \{\boldsymbol{\theta}_{1,2}, \boldsymbol{\theta}_{1,3}, \ldots, \boldsymbol{\theta}_{Q-1,Q} \}$, where $\boldsymbol{Y_i}^{(p)}$ and $\boldsymbol{Y_i}^{(q)}$ are the observations in $\boldsymbol{Y_i}$ belonging to subsamples $S_p$ and $S_q$, respectively.
             \item Similarly, the combination of all $\hat{\boldsymbol{\theta}}_{p,q}$ into a single estimator $\hat{\boldsymbol{\theta}}$ depends on the precise model and data structure.
         \end{itemize}
     \end{frame}
+
+    \note{
+        \begin{itemize}
+            \item without the pairwise fitting, we have to fit the model on the entire dataset, which is computationally infeasible when $n$ is very large. By fitting the model on pairs of subsamples, we can reduce the computational burden while still accounting for the association between longitudinal observations.
+            \item not gonna go into details here since this is more suitable for longitudinal data, which is not the focus of our presentation, but the idea is similar to dependent subsamples
+            \item similarly, $\boldsymbol{\psi} = \{\boldsymbol{\theta}_{1,2}, \boldsymbol{\theta}_{1,3}, \ldots, \boldsymbol{\theta}_{Q-1,Q} \} = \{\boldsymbol{\theta}_{p,q} : p < q\}$
+            \item what if both $n$ and $N$ are large? there is no mention of this in the literature, should we mention this?
+        \end{itemize}
+    }
