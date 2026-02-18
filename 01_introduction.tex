@@ -84,5 +84,6 @@
         Issues with Large Datasets
         \begin{itemize}
             \item it's even worse when we add another level to the hierarchy, e.g. students nested within classes nested within schools, which is common in educational research.
+            \item the fitting of mixed models implies integrating random effects for which approximations are needed. Because this needs to be done for each cluster in the data set separately, and at each step of the optimization process, this can become extremely time consuming in cases where the number N of clusters is (very) large. Alternatively, large numbers n of observations per cluster lead to high-dimensional multivariate distributions for the measurements per cluster. This creates numerical problems, even in the linear model, due to numerical inversion of large covariance structures
         \end{itemize}
     }
