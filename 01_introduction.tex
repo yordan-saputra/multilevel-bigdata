@@ -73,17 +73,21 @@
     \subsection{Issues with Large Datasets}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
-        Hierarchical data ($N$ groups $\times$ $n$ individuals) expands dramatically, potentially reaching gigabytes in size. Two main issues with large datasets:
+        As hierarchical data scales ($N$ groups $\times$ $n$ individuals), massive datasets create the following issues:
         \begin{itemize}
-            \item \textbf{Large number of groups}: Computational bottleneck from numerical integration over random effects for each group at every optimization step, leading to high computational costs
-            \item \textbf{Large group sizes}: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models \footcites{clark2019}{speelman2018}
+            \item High number of groups
+            \item Large group sizes \footcites{clark2019}{speelman2018}
+            \item Design matrix construction \footcite{wood2014}
         \end{itemize}
     \end{frame}
 
     \note{
+        \tiny
         Issues with Large Datasets
         \begin{itemize}
+            \item Large number of groups: Computational bottleneck from numerical integration over random effects for each group at every optimization step, leading to high computational costs
+            \item Large group sizes: High-dimensional multivariate distributions create numerical issues with large covariance matrix inversion, even in linear models
+            \item construction of the full design matrix $X$ leads to high computational costs. In GAM, the estimator $\hat{\beta} = (X^T X + \sum \lambda_j S_j)^{-1}X^T y$ is hard to compute when $X$ is large.
             \item it's even worse when we add another level to the hierarchy, e.g. students nested within classes nested within schools, which is common in educational research.
-            \item the fitting of mixed models implies integrating random effects for which approximations are needed. Because this needs to be done for each cluster in the data set separately, and at each step of the optimization process, this can become extremely time consuming in cases where the number N of clusters is (very) large. Alternatively, large numbers n of observations per cluster lead to high-dimensional multivariate distributions for the measurements per cluster. This creates numerical problems, even in the linear model, due to numerical inversion of large covariance structures
         \end{itemize}
     }
