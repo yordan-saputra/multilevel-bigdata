@@ -1,34 +1,39 @@
 \section{R Packages}
 
-    \subsection{\texttt{lme4}}
+    \subsection{\texttt{lme4} and \texttt{mgcv}}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
+        \texttt{lme4}
         \begin{itemize}
-            \item \texttt{lme4} is an R package for fitting linear and generalized linear mixed-effects (multilevel) models using `Eigen' C\texttt{++} library and S4 classes.
-            \item It's computationally efficient, enabling it to handle very large sample sizes for simpler mixed models and to process hundreds of thousands of observations with random effects on a typical laptop.
-            \item Modeling functions:
-                \begin{itemize}
-                    \item \texttt{lmer()}: fits linear multilevel model using restricted maximum likelihood (REML) or maximum likelihood estimation.
-                    \item \texttt{glmer()}: fits generalized linear multilevel model, accommodating non-normal response distributions.
-                \end{itemize}
-            \item Reference: \url{https://cran.r-project.org/web/packages/lme4/lme4.pdf}
+            \item an R package for fitting linear and generalize linear mixed-effects (multilevel) models \footcite{lme4}
+            \item efficient, able to handle large sample sizes for simple model, and process hundreds of thousands observations on a typical laptop
+            \item Modeling functions: \texttt{lmer()} and \texttt{glmer()}
+        \end{itemize}
+
+        \texttt{mgcv}
+        \begin{itemize}
+            \item an R package for fitting generalized additive model and generalized additive mixed models \footcite{mgcv}
+            \item Modeling functions: \texttt{gam()} and \texttt{bam()}
         \end{itemize}
     \end{frame}
 
-    \subsection{\texttt{mgcv}}
-    \begin{frame}
-        \frametitle{\insertsection\ $-$ \insertsubsection}
+    \note{
+        \tiny
+        can start by saying we have two packages that are used for large datasets, that is lme4 and mgcv
+
+        lme4:
         \begin{itemize}
-            \item \texttt{mgcv} is an R package for fitting generalized additive models (GAMs) and generalized additive mixed models (GAMMs) using penalized regression splines.
-            \item Modeling functions:
-                \begin{itemize}
-                    \item \texttt{gam()}: fits generalized additive multilevel models using penalized regression splines with smooth terms that can incorporate multilevel structure through random effect splines.
-                    \item \texttt{bam()}: a computationally efficient version of \texttt{gam()} optimized for very large datasets.
-                    % fits generalized additive multilevel models to very large datasets, optimized through parallelization and discretization methods.
-                \end{itemize}
-            \item Reference: \url{https://cran.r-project.org/web/packages/mgcv/mgcv.pdf}
+            \item is an R package for fitting linear and generalized linear mixed-effects (multilevel) models using `Eigen' C\texttt{++} library and S4 classes. (or just say using C++ library). Eigen is a high-level C++ template library for linear algebra that provides efficient, header-only classes for managing matrices, vectors, and numerical solvers. S4 is a formal system in R for object-oriented programming that uses strictly defined classes and methods to ensure data integrity and facilitate complex statistical modeling.
+            \item It's computationally efficient, enabling it to handle very large sample sizes for simpler mixed models and to process hundreds of thousands of observations with random effects on a typical laptop.
+            \item \texttt{lmer()}: fits linear multilevel model using restricted maximum likelihood (REML) or maximum likelihood estimation. \texttt{glmer()}: fits generalized linear multilevel model, accommodating non-normal response distributions. basically, \texttt{lmer()} for linear models and \texttt{glmer()} for GLM
         \end{itemize}
-    \end{frame}
+
+        mgcv:
+        \begin{itemize}
+            \item is an R package for fitting generalized additive models (GAMs) and generalized additive mixed models (GAMMs) using penalized regression splines.
+            \item \texttt{gam()}: fits generalized additive multilevel models using penalized regression splines with smooth terms that can incorporate multilevel structure through random effect splines. \texttt{bam()}: a computationally efficient version of \texttt{gam()} optimized for very large datasets.
+        \end{itemize}
+    }
 
     \subsection{Why use \texttt{bam()}?}
     \begin{frame}
