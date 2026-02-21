@@ -19,7 +19,7 @@
 
     \note{
         \tiny
-        can start by saying we have two packages that are used for large datasets, that is lme4 and mgcv
+        can start by saying "in practice, optimization on large datasets are much more complex than what we have shown here, and a short presentation is not enough to cover all the details. we have two packages (used for large datasets) that we want to cover here, that is lme4 and mgcv"
 
         lme4:
         \begin{itemize}
@@ -39,23 +39,69 @@
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{itemize}
-            \item The underlying model between \texttt{gam()} function and \texttt{lme4} is the same, with differences only in the way parameters are estimated.
-            \item \texttt{bam()} employs parallelized computation on model matrix subsets and optional data discretization to extract minimal necessary information, enabling efficient estimation of large multilevel models.
-            \item With large enough datasets, this discretization has negligible impact on parameter estimates (differing only at high decimal precision), but leads to dramatic speed improvements.
+            \item Same underlying model between \texttt{gam()} and \texttt{lme4}, with differences in parameter estimation
+            \item How \texttt{bam()} works:
+            \begin{itemize}
+                \item QR decomposition \footcite{wood2015}
+                \item (i) Efficient fitting algorithm, (ii) Parallel computation, and (iii) Covariate discretization \footcite{wood2017}
+                \item Efficient crossproduct matrix $X^\top WX$ computation \footcite{wood2020}
+            \end{itemize}
+            \item Discretization on large datasets leads to tradeoff between accuracy and speed
         \end{itemize}
     \end{frame}
+        
+    \note{
+        \begin{itemize}
+            \item The underlying model between \texttt{gam()} function and \texttt{lme4} is the same, with differences only in the way parameters are estimated.
+            \item \texttt{bam()} employs parallelized computation on model matrix subsets and optional data discretization to extract minimal necessary information, enabling efficient estimation of large multilevel models.
+            \item Discretization has negligible impact on parameter estimates (differing only at high decimal precision), but leads to dramatic speed improvements.
+        \end{itemize}
+    }
+
+    \note{
+        \tiny
+        QR decomposition
+        \begin{itemize}
+            \item QR decomposition is a method for decomposing a matrix into a lower triangular matrix and an upper triangular matrix.
+            \item Fitting GAM $\hat{\beta} = (X^T X + \sum \lambda_j S_j)^{-1}X^T y$ becomes $\hat{\beta} = (R^T R + \sum \lambda_j S_j)^{-1}R^T R$ where $X = QR$, $X$ is the design matrix, $S_j$ is the penalty matrix, and $\lambda_j$ are smoothing parameters.
+        \end{itemize}
+        (i) Efficient fitting algorithm, (ii) Parallel computation, and (iii) Covariate discretization
+        \begin{itemize}
+            \item (i) Efficient fitting algorithm: which required only basic easily parallelized matrix computations and a pivoted Cholesky decompostion
+            \item (ii) Parallel computation: the use of a scalable parallel block pivoted Cholesky algorithm mentioned above
+            \item (iii) Covariate discretization: an efficient approach to model matrix storage and computations with the model matrix, using discretized covariates. For example, there are only a finite number of site locations, site labels and elevations, temperature is only recorded to within $0.1^\circ C$ (or any precision), etc
+            \item These three elements work together, and dropping any one of them leads to an increase in fitting time of an order of magnitude or more. also, mention that this is a new algorithm that is better than QR decomposition. 3 orders of magnitude faster than QR decomposition
+        \end{itemize}
+        Efficient crossproduct matrix $X^\top WX$ computation
+        \begin{itemize}
+            \item the most expensive part of previous algorithm is the formation of the matrix crossproduct. this approach present a simple, novel and substantially more efficient approach to the computation of this cross product
+        \end{itemize}
+    }
 
     \subsection{When to use \texttt{bam()}?}
     \begin{frame}
         \frametitle{\insertsection\ $-$ \insertsubsection}
         \begin{itemize}
-        \item In general, \texttt{lme4} is preferred for most multilevel datasets due to its straightforward syntax and robust estimation methods.
-        \item \texttt{bam()} is particularly useful when:
-        \begin{itemize}
-            \item The model structure is complex and computationally demanding for \texttt{lme4}
-            \item Smooth (nonlinear) terms are required
-            \item The dataset is very large and memory limitations arise
-            \item Parallel computing resources can be effectively utilized
+            \item In general, \texttt{lme4} is preferred due to easy syntax and robust estimation
+            \item \texttt{bam()} is particularly useful for:
+            \begin{itemize}
+                \item Complex models that exceed \texttt{lme4}'s capabilities
+                \item Incorporating smooth (nonlinear) terms
+                \item Large datasets with memory issues
+                \item Leveraging parallel computing resources
+            \end{itemize}
         \end{itemize}
-    \end{itemize}
     \end{frame}
+
+    \note{
+        \begin{itemize}
+            \item In general, \texttt{lme4} is preferred for most multilevel datasets due to its straightforward syntax and robust estimation methods.
+            \item \texttt{bam()} is particularly useful when:
+            \begin{itemize}
+                \item You have complicated structure that begins to bog down lme4
+                \item You want to add smooth terms1
+                \item You have memory issues
+                \item You have a computing setup that can take advantage of bam
+            \end{itemize}
+        \end{itemize}
+    }
